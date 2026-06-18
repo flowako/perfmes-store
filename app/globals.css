@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ─── Colors ─── */
+  --color-ivory: #FAFAF7;
+  --color-cream: #FFFFFF;
+  --color-warm-white: #FAF9F6;
+  --color-gold-light: #E8D5A3;
+  --color-gold: #C9A84C;
+  --color-gold-dark: #A07830;
+  --color-charcoal: #1A1A1A;
+  --color-charcoal-light: #2A2A2A;
+  --color-muted: #6B6B6B;
+  --color-muted-light: #9B9B9B;
+  --color-border: #E8E4DC;
+  --color-border-light: #F0EDE6;
+  --color-dark-bg: #0F0F0F;
+  --color-dark-surface: #1A1A1A;
+  --color-dark-text: #F5F0E8;
+
+  /* ─── Fonts ─── */
+  --font-heading: var(--font-cormorant), "Georgia", serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background-color: var(--color-gold-light);
+  color: var(--color-charcoal);
+}
+
+/* ─── Image defaults ─── */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Utility Classes ─── */
+.section-label {
+  @apply font-body text-[10px] sm:text-[11px] font-medium tracking-[0.25em] uppercase text-gold;
+}
+
+.divider-gold {
+  @apply w-12 h-[1px] bg-gold-light;
+}
+
+.btn-gold {
+  @apply inline-flex items-center justify-center gap-2.5 h-[54px] px-9 bg-gold text-charcoal font-body text-[11px] font-medium tracking-[0.2em] uppercase hover:bg-gold-dark hover:text-cream transition-colors duration-300;
+}
+
+.btn-outline-light {
+  @apply inline-flex items-center justify-center gap-2.5 h-[54px] px-9 border border-dark-text/20 text-dark-text font-body text-[11px] font-medium tracking-[0.2em] uppercase hover:border-dark-text/40 hover:bg-dark-text/5 transition-all duration-300;
 }
