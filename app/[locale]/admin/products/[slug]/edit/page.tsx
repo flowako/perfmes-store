@@ -199,8 +199,8 @@ export default function EditProductPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 16 }}>
                 {[
-                  { key: 'nameFr', label: `${tp('name')} (FR)`, dir: 'ltr' },
-                  { key: 'nameAr', label: `${tp('name')} (AR)`, dir: 'rtl' },
+                  { key: 'nameFr', label: `${tp('name')} (FR)`, dir: 'ltr' as const },
+                  { key: 'nameAr', label: `${tp('name')} (AR)`, dir: 'rtl' as const },
                 ].map(f => (
                   <div key={f.key}>
                     <label style={{ display: 'block', fontFamily: 'Inter, sans-serif', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: T.muted, marginBottom: 6, fontWeight: 500 }}>{f.label} *</label>
@@ -212,8 +212,8 @@ export default function EditProductPage() {
                 ))}
               </div>
               {[
-                { key: 'descriptionFr', label: `${tp('translations')} (FR)`, dir: 'ltr', rows: 4 },
-                { key: 'descriptionAr', label: `${tp('translations')} (AR)`, dir: 'rtl', rows: 4 },
+                { key: 'descriptionFr', label: `${tp('translations')} (FR)`, dir: 'ltr' as const, rows: 4 },
+                { key: 'descriptionAr', label: `${tp('translations')} (AR)`, dir: 'rtl' as const, rows: 4 },
               ].map(f => (
                 <div key={f.key}>
                   <label style={{ display: 'block', fontFamily: 'Inter, sans-serif', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: T.muted, marginBottom: 6, fontWeight: 500 }}>{f.label} *</label>

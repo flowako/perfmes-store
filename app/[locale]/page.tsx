@@ -93,7 +93,7 @@ function GoldLink({
     </span>
   );
   if (external) return <a href={href}>{inner}</a>;
-  return <Link href={href}>{inner}</Link>;
+  return <Link href={href as any}>{inner}</Link>;
 }
 
 // ─── Hero Section ─────────────────────────────────────────
@@ -300,7 +300,7 @@ function CollectionsSection() {
             return (
               <Reveal key={c.id} delay={i * 0.08}>
                 <Link
-                  href={c.href}
+                  href={c.href as any}
                   className="group relative block overflow-hidden aspect-[4/5]"
                   style={{ backgroundColor: ESPRESSO }}
                 >
