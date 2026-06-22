@@ -17,9 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MAISON ÉLARA — Luxury Fragrances",
+  title: "Maison Éclore — Haute Parfumerie",
   description:
-    "Discover the art of scent. MAISON ÉLARA curates the world's finest fragrances — from timeless classics to rare niche compositions.",
+    "Maison Éclore — haute parfumerie depuis 1997. Des parfums rares, composés à la main, où la mémoire fleurit.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

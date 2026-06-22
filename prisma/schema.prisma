@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  @@index([email])
+}
+
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
+
+  @@index([slug])
+}
+
+model Category {
+  id        String            @id @default(cuid())
+  name      String            @unique
+  slug      String            @unique
+  createdAt DateTime          @default(now())
+  products  ProductCategory[]
+
+  @@index([slug])
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  reference String      @unique
+  status    OrderStatus @default(PENDING)
+  fullName  String
+  phone     String
+  wilaya    String
+  commune   String
+  address   String
+  notes     String?
+  total     Decimal     @db.Decimal(10, 2)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  items     OrderItem[]
+
+  @@index([reference])
+  @@index([status])
+  @@index([phone])
+  @@index([createdAt])
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id            String  @id @default(cuid())
+  orderId       String
+  variantId     String
+  quantity      Int
+  unitPrice     Decimal @db.Decimal(10, 2)
+  productNameFr String
+  productNameAr String
+  brandNameFr   String  @default("")
+  brandNameAr   String  @default("")
+  variantSize   String
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant       Variant @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([variantId])
+}
+
+model Product {
+  id           String               @id @default(cuid())
+  slug         String               @unique
+  brandId      String
+  gender       Gender
+  isFeatured   Boolean              @default(false)
+  isNewArrival Boolean              @default(false)
+  isActive     Boolean              @default(true)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @default(now()) @updatedAt
+  brand        Brand                @relation(fields: [brandId], references: [id])
+  categories   ProductCategory[]
+  images       ProductImage[]
+  translations ProductTranslation[]
+  variants     Variant[]
+
+  @@index([brandId])
+  @@index([gender])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([isNewArrival])
+  @@index([slug])
+  @@index([createdAt])
+}
+
+model ProductCategory {
+  productId  String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([categoryId])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  url       String
+  altAr     String?
+  altFr     String?
+  order     Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([order])
+}
+
+model ProductTranslation {
+  id          String  @id @default(cuid())
+  productId   String
+  locale      Locale
+  name        String
+  description String  @db.Text
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+  @@index([locale])
+  @@index([name])
+}
+
+model Promotion {
+  id                String             @id @default(cuid())
+  name              String
+  startDate         DateTime
+  endDate           DateTime
+  isActive          Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now()) @updatedAt
+  discountType      String             @default("percentage")
+  discountValue     Decimal            @db.Decimal(10, 2)
+  discountedPrice   Decimal?           @db.Decimal(10, 2)
+  promotionVariants PromotionVariant[]
+
+  @@index([isActive])
+  @@index([startDate, endDate])
+}
+
+model PromotionVariant {
+  promotionId String
+  variantId   String
+  createdAt   DateTime  @default(now())
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  variant     Variant   @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@id([promotionId, variantId])
+  @@index([variantId])
+}
+
+model Settings {
+  id            String   @id @default("singleton")
+  storeNameFr   String   @default("Parfums")
+  storeNameAr   String   @default("عطور")
+  phone         String   @default("")
+  email         String   @default("")
+  instagramUrl  String   @default("")
+  bannerTextFr  String   @default("")
+  bannerTextAr  String   @default("")
+  bannerEnabled Boolean  @default(false)
+  updatedAt     DateTime @default(now()) @updatedAt
+}
+
+model Variant {
+  id                String             @id @default(cuid())
+  productId         String
+  size              String
+  price             Decimal            @db.Decimal(10, 2)
+  stock             Int                @default(0)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now()) @updatedAt
+  orderItems        OrderItem[]
+  promotionVariants PromotionVariant[]
+  product           Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([stock])
+}
+
+enum Gender {
+  MEN
+  WOMEN
+  UNISEX
+}
+
+enum Locale {
+  ar
+  fr
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}

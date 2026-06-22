@@ -1,0 +1,54 @@
+.next/types/validator.ts(107,39): error TS2307: Cannot find module '../../app/archive/test1/page.js' or its corresponding type declarations.
+.next/types/validator.ts(116,39): error TS2307: Cannot find module '../../app/archive/test2/page.js' or its corresponding type declarations.
+.next/types/validator.ts(125,39): error TS2307: Cannot find module '../../app/archive/test3/page.js' or its corresponding type declarations.
+.next/types/validator.ts(134,39): error TS2307: Cannot find module '../../app/archive/test4/page.js' or its corresponding type declarations.
+.next/types/validator.ts(152,39): error TS2307: Cannot find module '../../app/products/page.js' or its corresponding type declarations.
+.next/types/validator.ts(207,31): error TS2344: Type 'typeof import("/home/mahmoud/Desktop/BUSINESS/PRJ-002/website/app/api/admin/products/[slug]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/products/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: NextRequest, context: { params: Promise<{ slug: string; }>; }) => Promise<NextResponse<{ error: string; }> | NextResponse<{ product: { brand: { name: string; id: string; createdAt: Date; slug: string; }; images: { ...; }[]; variants: ({ ...; } & { ...; })[]; categories: ({ ...; } & { ...; })[]; translation...' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters 'context' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: Promise<{ slug: string; }>; }'.
+          Types of property 'params' are incompatible.
+            Type 'Promise<{ id: string; }>' is not assignable to type 'Promise<{ slug: string; }>'.
+              Property 'slug' is missing in type '{ id: string; }' but required in type '{ slug: string; }'.
+app/[locale]/products/page.tsx(518,53): error TS2367: This comparison appears to be unintentional because the types '"Bestseller" | "New"' and '"Rare"' have no overlap.
+app/[locale]/products/page.tsx(519,43): error TS2367: This comparison appears to be unintentional because the types '"Bestseller" | "New"' and '"Rare"' have no overlap.
+app/[locale]/products/page.tsx(652,51): error TS2367: This comparison appears to be unintentional because the types '"Bestseller" | "New"' and '"Rare"' have no overlap.
+app/[locale]/products/page.tsx(653,41): error TS2367: This comparison appears to be unintentional because the types '"Bestseller" | "New"' and '"Rare"' have no overlap.
+app/api/featured/route.ts(54,60): error TS2531: Object is possibly 'null'.
+app/api/new-arrivals/route.ts(54,60): error TS2531: Object is possibly 'null'.
+app/api/orders/route.ts(88,22): error TS18047: 'activePromotion.discountedPrice' is possibly 'null'.
+app/api/search/route.ts(59,13): error TS2353: Object literal may only specify known properties, and 'promotion' does not exist in type 'VariantInclude<DefaultArgs>'.
+app/cart/page.tsx(6,20): error TS2307: Cannot find module '@/app/components/Header' or its corresponding type declarations.
+app/cart/page.tsx(7,20): error TS2307: Cannot find module '@/app/components/Footer' or its corresponding type declarations.
+app/checkout/page.tsx(6,20): error TS2307: Cannot find module '@/app/components/Header' or its corresponding type declarations.
+app/checkout/page.tsx(7,20): error TS2307: Cannot find module '@/app/components/Footer' or its corresponding type declarations.
+app/checkout/page.tsx(501,27): error TS2322: Type '{ hidden: { pathLength: number; opacity: number; }; visible: { pathLength: number; opacity: number; transition: { pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ pathLength: number; opacity: number; transition: { pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }; }' is not assignable to type 'Variant'.
+      Type '{ pathLength: number; opacity: number; transition: { pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }; }' is not assignable to type 'TargetAndTransition'.
+        Types of property 'transition' are incompatible.
+          Type '{ pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }' is not assignable to type 'Transition<any> | undefined'.
+            Type '{ pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+              Type '{ pathLength: { duration: number; ease: string; }; opacity: { duration: number; }; }' is not assignable to type 'SVGPathTransitions'.
+                The types of 'pathLength.ease' are incompatible between these types.
+                  Type 'string' is not assignable to type 'Easing | Easing[] | undefined'.
+app/products/pageetrer.tsx(6,20): error TS2307: Cannot find module '@/app/components/Header' or its corresponding type declarations.
+app/products/pageetrer.tsx(7,20): error TS2307: Cannot find module '@/app/components/Footer' or its corresponding type declarations.
+app/products/pageetrer.tsx(8,25): error TS2307: Cannot find module '@/app/components/ProductCard' or its corresponding type declarations.
+app/products/pageetrer.tsx(9,27): error TS2307: Cannot find module '@/app/components/FilterSidebar' or its corresponding type declarations.
+i18n.ts(10,33): error TS2345: Argument of type '({ locale }: GetRequestConfigParams) => Promise<{ messages: any; }>' is not assignable to parameter of type '(params: GetRequestConfigParams) => RequestConfig | Promise<RequestConfig>'.
+  Type 'Promise<{ messages: any; }>' is not assignable to type 'RequestConfig | Promise<RequestConfig>'.
+    Type 'Promise<{ messages: any; }>' is not assignable to type 'Promise<RequestConfig>'.
+      Type '{ messages: any; }' is not assignable to type 'RequestConfig'.
+        Property 'locale' is missing in type '{ messages: any; }' but required in type '{ locale: string; }'.
+lib/prisma.ts(3,22): error TS7016: Could not find a declaration file for module 'pg'. '/home/mahmoud/Desktop/BUSINESS/PRJ-002/website/node_modules/.pnpm/pg@8.21.0/node_modules/pg/esm/index.mjs' implicitly has an 'any' type.
+  If the 'pg' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/pg'
+prisma/seed.ts(3,22): error TS7016: Could not find a declaration file for module 'pg'. '/home/mahmoud/Desktop/BUSINESS/PRJ-002/website/node_modules/.pnpm/pg@8.21.0/node_modules/pg/esm/index.mjs' implicitly has an 'any' type.
+  If the 'pg' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/pg'
+prisma/seed.ts(27,7): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type '(Without<AdminUserCreateInput, AdminUserUncheckedCreateInput> & AdminUserUncheckedCreateInput) | (Without<...> & AdminUserCreateInput)'.
+prisma/seed.ts(45,7): error TS2353: Object literal may only specify known properties, and 'defaultLocale' does not exist in type '(Without<SettingsCreateInput, SettingsUncheckedCreateInput> & SettingsUncheckedCreateInput) | (Without<...> & SettingsCreateInput)'.
+prisma/seed.ts(71,45): error TS2353: Object literal may only specify known properties, and 'isActive' does not exist in type '(Without<BrandCreateInput, BrandUncheckedCreateInput> & BrandUncheckedCreateInput) | (Without<...> & BrandCreateInput)'.
+prisma/seed.ts(74,18): error TS2339: Property 'brandTranslation' does not exist on type 'PrismaClient<{ adapter: PrismaPg; }, never, DefaultArgs>'.
+prisma/seed.ts(101,45): error TS2353: Object literal may only specify known properties, and 'isActive' does not exist in type '(Without<CategoryCreateInput, CategoryUncheckedCreateInput> & CategoryUncheckedCreateInput) | (Without<...> & CategoryCreateInput)'.
+prisma/seed.ts(104,18): error TS2339: Property 'categoryTranslation' does not exist on type 'PrismaClient<{ adapter: PrismaPg; }, never, DefaultArgs>'.

@@ -75,3 +75,92 @@ img {
 .btn-outline-light {
   @apply inline-flex items-center justify-center gap-2.5 h-[54px] px-9 border border-dark-text/20 text-dark-text font-body text-[11px] font-medium tracking-[0.2em] uppercase hover:border-dark-text/40 hover:bg-dark-text/5 transition-all duration-300;
 }
+
+/* ─── Landing page design utilities ─── */
+/* Eyebrow / section label */
+.ec-eyebrow {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #B89A57;
+}
+@media (min-width: 768px) {
+  .ec-eyebrow { font-size: 11px; }
+}
+
+/* Display heading (Cormorant) */
+.ec-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+/* Link with animated gold underline that grows from left on hover */
+.ec-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.ec-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  opacity: 0.25;
+}
+.ec-link .ec-link__bar {
+  display: inline-block;
+  height: 1px;
+  width: 1.75rem;
+  background-color: #B89A57;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ec-link:hover .ec-link__bar { width: 3rem; }
+
+/* Hairline that grows from center on view (set via framer instead where needed) */
+.ec-hairline {
+  height: 1px;
+  background-color: #B89A57;
+  opacity: 0.4;
+}
+
+/* Product / collection card hover image zoom handled in component */
+
+/* Subtle film grain overlay for dark sections */
+.ec-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ─── Scrollbar hide utility ─── */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
