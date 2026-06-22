@@ -18,6 +18,8 @@
  */
 
 import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import AdminNavigation from '@/components/AdminNavigation'
 
@@ -33,11 +35,19 @@ export default async function AdminLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  // Enable static rendering for admin pages
   setRequestLocale(locale)
   
   const isRtl = locale === 'ar'
   const session = await auth()
+
+  // Redirect unauthenticated users to login (skip for login page itself)
+  if (!session) {
+    const headersList = await headers()
+    const pathname = headersList.get('x-pathname') || ''
+    if (!pathname.endsWith('/login')) {
+      redirect(`/${locale}/admin/login?callbackUrl=${encodeURIComponent(pathname)}`)
+    }
+  }
 
   if (session) {
     return (

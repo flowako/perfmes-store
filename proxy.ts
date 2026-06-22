@@ -1,16 +1,10 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getToken } from 'next-auth/jwt'
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-/**
- * Proxy for:
- * 1. Admin route protection (now at /:locale/admin/*)
- * 2. Locale detection and routing for storefront (next-intl)
- */
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -23,30 +17,13 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Admin routes — handle protection, then return next()
+  // Admin routes — pass current pathname to layout via request header
+  // Auth check happens in admin layout using auth()
   const adminMatch = pathname.match(/^\/(fr|ar)\/admin(\/.+)?$/)
   if (adminMatch) {
-    const locale = adminMatch[1]
-    const adminPath = adminMatch[2] || ''
-    
-    // Login page — let it render without auth check
-    if (adminPath.startsWith('/login')) {
-      return NextResponse.next()
-    }
-
-    // Protected admin routes
-    const token = await getToken({ 
-      req: request, 
-      secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET 
-    })
-
-    if (!token) {
-      const loginUrl = new URL(`/${locale}/admin/login`, request.url)
-      loginUrl.searchParams.set('callbackUrl', pathname)
-      return NextResponse.redirect(loginUrl)
-    }
-
-    return NextResponse.next()
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-pathname', pathname)
+    return NextResponse.next({ request: { headers: requestHeaders } })
   }
 
   // Storefront routes — use next-intl middleware
