@@ -2,16 +2,16 @@
  * Admin Navigation Component
  * 
  * DESCRIPTION:
- * Responsive navigation for admin panel with full i18n support.
- * Desktop: espresso sidebar with gold accents and user info.
+ * Responsive navigation for admin panel with locale-aware links.
+ * Desktop: espresso sidebar with gold accents, locale switch, home link, user info.
  * Mobile: bottom nav bar + slide-in drawer overlay.
  * 
  * FUNCTIONALITY:
- * - Navigation links with active state via pathname matching
+ * - Navigation links with locale prefix and active state
+ * - Home link to storefront
+ * - Locale switch toggle (FR / AR)
+ * - User email display and logout
  * - RTL-aware layout
- * - Desktop sidebar with user info, locale switch, home link, and logout
- * - Mobile bottom nav and hamburger drawer
- * - Uses next-intl for all labels
  */
 
 'use client'
@@ -28,8 +28,8 @@ import {
   LogOut,
   Menu,
   X,
-  Home,
-  Globe
+  Globe,
+  ExternalLink
 } from 'lucide-react'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -47,15 +47,16 @@ const T = {
 
 interface AdminNavigationProps {
   userEmail: string
-  locale: string
 }
 
-export default function AdminNavigation({ userEmail, locale }: AdminNavigationProps) {
+const locales = ['fr', 'ar'] as const
+
+export default function AdminNavigation({ userEmail }: AdminNavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const currentLocale = useLocale()
+  const locale = useLocale()
   const t = useTranslations('admin.nav')
-  const isRtl = currentLocale === 'ar'
+  const isRtl = locale === 'ar'
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -64,15 +65,20 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
   }
 
   const switchLocale = (newLocale: string) => {
-    // Extract the current path after the locale
-    const pathWithoutLocale = pathname.replace(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//, '/')
-    router.push(`/${newLocale}${pathWithoutLocale}`)
+    const segments = pathname.split('/')
+    segments[1] = newLocale
+    router.push(segments.join('/'))
   }
 
+  const otherLocale = locales.find(l => l !== locale) || 'fr'
+  const localeLabel = otherLocale === 'ar' ? 'AR' : 'FR'
+
+  const l = (href: string) => `/${locale}${href}`
+
   const isActive = (href: string) => {
-    const fullHref = `/${locale}${href}`
-    if (href === '/admin/dashboard') return pathname === fullHref
-    return pathname.startsWith(fullHref)
+    const full = l(href)
+    if (href === '/admin/dashboard') return pathname === full
+    return pathname.startsWith(full)
   }
 
   const navItems = [
@@ -90,37 +96,23 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
       {/* Desktop Sidebar */}
       <aside
         className="fixed inset-y-0 hidden lg:flex lg:w-64 lg:flex-col"
-        style={{ 
-          backgroundColor: T.espresso, 
-          zIndex: 40,
-          right: isRtl ? '0' : undefined,
-          left: isRtl ? undefined : '0'
-        }}
+        style={{ backgroundColor: T.espresso, zIndex: 40 }}
       >
         <div className="flex flex-col flex-1 min-h-0">
-          {/* Logo & Home Link */}
+          {/* Logo + Home link */}
           <div className="flex items-center justify-between h-16 px-6" style={{ borderBottom: `1px solid ${T.gold}15` }}>
             <h1 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.5rem', fontWeight: 300, color: T.ivory }}>
               {t('logo')}
             </h1>
-            <Link 
+            <a
               href={`/${locale}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '8px 12px',
-                color: T.ivory,
-                textDecoration: 'none',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 12,
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor = `${T.gold}15` }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent' }}
+              style={{ color: `${T.ivory}60`, transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}
+              onMouseEnter={e => { e.currentTarget.style.color = T.gold }}
+              onMouseLeave={e => { e.currentTarget.style.color = `${T.ivory}60` }}
+              aria-label="Home"
             >
-              <Home style={{ width: 16, height: 16, marginInlineEnd: 8 }} />
-              {t('home')}
-            </Link>
+              <ExternalLink style={{ width: 16, height: 16 }} />
+            </a>
           </div>
 
           {/* Navigation */}
@@ -131,7 +123,7 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
               return (
                 <Link
                   key={item.href}
-                  href={`/${locale}${item.href}`}
+                  href={l(item.href)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -158,8 +150,33 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
             })}
           </nav>
 
-          {/* User Info, Locale Switch & Logout */}
+          {/* User Info & Locale Switch & Logout */}
           <div style={{ padding: 16, borderTop: `1px solid ${T.gold}15` }}>
+            {/* Locale Switch */}
+            <button
+              onClick={() => switchLocale(otherLocale)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                width: '100%',
+                padding: '8px 16px',
+                marginBottom: 8,
+                fontFamily: 'Inter, sans-serif',
+                fontSize: 12,
+                fontWeight: 500,
+                color: `${T.ivory}CC`,
+                backgroundColor: `${T.gold}12`,
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = T.gold; e.currentTarget.style.color = T.espresso }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = `${T.gold}12`; e.currentTarget.style.color = `${T.ivory}CC` }}
+            >
+              <Globe style={{ width: 16, height: 16, marginInlineEnd: 10 }} />
+              {localeLabel}
+            </button>
+
             <div style={{ marginBottom: 10 }}>
               <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, color: `${T.ivory}60`, marginBottom: 2 }}>
                 {t('loggedInAs')}
@@ -168,62 +185,6 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
                 {userEmail}
               </p>
             </div>
-            
-            {/* Locale Switch */}
-            <div style={{ marginBottom: 10, display: 'flex', gap: 8 }}>
-              
-              <button
-                onClick={() => switchLocale('fr')}
-                style={{
-                  flex: 1,
-                  padding: '6px 10px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: 11,
-                  fontWeight: locale === 'fr' ? 500 : 300,
-                  color: locale === 'fr' ? T.espresso : T.ivory,
-                  backgroundColor: locale === 'fr' ? T.gold : `${T.gold}15`,
-                  border: 'none',
-                  borderRadius: 4,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => {
-                  if (locale !== 'fr') e.currentTarget.style.backgroundColor = `${T.gold}30`
-                }}
-                onMouseLeave={e => {
-                  if (locale !== 'fr') e.currentTarget.style.backgroundColor = `${T.gold}15`
-                }}
-              >
-                <Globe style={{ width: 12, height: 12, marginInlineEnd: 6, display: 'inline' }} />
-                FR
-              </button>
-              <button
-                onClick={() => switchLocale('ar')}
-                style={{
-                  flex: 1,
-                  padding: '6px 10px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: 11,
-                  fontWeight: locale === 'ar' ? 500 : 300,
-                  color: locale === 'ar' ? T.espresso : T.ivory,
-                  backgroundColor: locale === 'ar' ? T.gold : `${T.gold}15`,
-                  border: 'none',
-                  borderRadius: 4,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => {
-                  if (locale !== 'ar') e.currentTarget.style.backgroundColor = `${T.gold}30`
-                }}
-                onMouseLeave={e => {
-                  if (locale !== 'ar') e.currentTarget.style.backgroundColor = `${T.gold}15`
-                }}
-              >
-                <Globe style={{ width: 12, height: 12, marginInlineEnd: 6, display: 'inline' }} />
-                AR
-              </button>
-            </div>
-            
             <button
               onClick={handleLogout}
               style={{
@@ -252,38 +213,24 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
 
       {/* Mobile Header */}
       <div
-        className="fixed top-0 right-0 left-0 flex lg:hidden z-40"
+        className="fixed top-0 left-0 right-0 flex lg:hidden z-40"
         style={{ backgroundColor: T.espresso, height: 56 }}
       >
         <div className="flex items-center justify-between w-full px-4">
-          <h1 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.25rem', fontWeight: 300, color: T.ivory }}>
-            {t('logo')}
-          </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Link 
-              href={`/${locale}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '6px 10px',
-                color: T.ivory,
-                textDecoration: 'none',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 11,
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor = `${T.gold}15` }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent' }}
-            >
-              <Home style={{ width: 14, height: 14 }} />
-            </Link>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ padding: 8, color: T.ivory, background: 'none', border: 'none', cursor: 'pointer' }}
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+          <div className="flex items-center" style={{ gap: 10 }}>
+            <a href={`/${locale}`} style={{ color: `${T.ivory}60`, display: 'flex', alignItems: 'center' }}>
+              <ExternalLink style={{ width: 16, height: 16 }} />
+            </a>
+            <h1 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.25rem', fontWeight: 300, color: T.ivory }}>
+              {t('logo')}
+            </h1>
           </div>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{ padding: 8, color: T.ivory, background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
       </div>
 
@@ -312,11 +259,15 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col h-full">
-                {/* Mobile drawer header */}
                 <div className="flex items-center justify-between px-6" style={{ height: 56, borderBottom: `1px solid ${T.gold}15` }}>
-                  <h1 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.25rem', fontWeight: 300, color: T.ivory }}>
-                    {t('logo')}
-                  </h1>
+                  <div className="flex items-center" style={{ gap: 10 }}>
+                    <a href={`/${locale}`} style={{ color: `${T.ivory}60` }}>
+                      <ExternalLink style={{ width: 16, height: 16 }} />
+                    </a>
+                    <h1 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.25rem', fontWeight: 300, color: T.ivory }}>
+                      {t('logo')}
+                    </h1>
+                  </div>
                   <button onClick={() => setMobileMenuOpen(false)} style={{ padding: 8, color: T.ivory, background: 'none', border: 'none', cursor: 'pointer' }}>
                     <X size={20} />
                   </button>
@@ -329,7 +280,7 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
                     return (
                       <Link
                         key={item.href}
-                        href={`/${locale}${item.href}`}
+                        href={l(item.href)}
                         onClick={() => setMobileMenuOpen(false)}
                         style={{
                           display: 'flex',
@@ -353,81 +304,25 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
                   })}
                 </nav>
 
-                {/* Mobile drawer footer */}
                 <div style={{ padding: 16, borderTop: `1px solid ${T.gold}15` }}>
+                  {/* Locale switch */}
+                  <button onClick={() => { setMobileMenuOpen(false); switchLocale(otherLocale) }}
+                    style={{ display: 'flex', alignItems: 'center', width: '100%', padding: '8px 16px', marginBottom: 8, fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 500, color: `${T.ivory}CC`, backgroundColor: `${T.gold}12`, border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = T.gold; e.currentTarget.style.color = T.espresso }}
+                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = `${T.gold}12`; e.currentTarget.style.color = `${T.ivory}CC` }}>
+                    <Globe style={{ width: 16, height: 16, marginInlineEnd: 10 }} />
+                    {localeLabel}
+                  </button>
                   <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, color: `${T.ivory}60`, marginBottom: 4 }}>
                     {t('loggedIn')}
                   </p>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 500, color: T.ivory, marginBottom: 8 }}>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 500, color: T.ivory, marginBottom: 10 }}>
                     {userEmail}
                   </p>
-                  
-                  {/* Mobile Locale Switch */}
-                  <div style={{ marginBottom: 12, display: 'flex', gap: 6 }}>
-                    
-                    <button
-                      onClick={() => {
-                        switchLocale('fr')
-                        setMobileMenuOpen(false)
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '6px 8px',
-                        fontFamily: 'Inter, sans-serif',
-                        fontSize: 10,
-                        fontWeight: locale === 'fr' ? 500 : 300,
-                        color: locale === 'fr' ? T.espresso : T.ivory,
-                        backgroundColor: locale === 'fr' ? T.gold : `${T.gold}15`,
-                        border: 'none',
-                        borderRadius: 4,
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      FR
-                    </button>
-                    <button
-                      onClick={() => {
-                        switchLocale('ar')
-                        setMobileMenuOpen(false)
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '6px 8px',
-                        fontFamily: 'Inter, sans-serif',
-                        fontSize: 10,
-                        fontWeight: locale === 'ar' ? 500 : 300,
-                        color: locale === 'ar' ? T.espresso : T.ivory,
-                        backgroundColor: locale === 'ar' ? T.gold : `${T.gold}15`,
-                        border: 'none',
-                        borderRadius: 4,
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      AR
-                    </button>
-                  </div>
-                  
-                  <button
-                    onClick={handleLogout}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      width: '100%',
-                      padding: '8px 16px',
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: 12,
-                      fontWeight: 300,
-                      color: `${T.ivory}80`,
-                      backgroundColor: 'transparent',
-                      border: 'none',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                    }}
+                  <button onClick={handleLogout}
+                    style={{ display: 'flex', alignItems: 'center', width: '100%', padding: '8px 16px', fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 300, color: `${T.ivory}80`, backgroundColor: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
                     onMouseEnter={e => { e.currentTarget.style.backgroundColor = `${T.gold}10`; e.currentTarget.style.color = '#E57373' }}
-                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = `${T.ivory}80` }}
-                  >
+                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = `${T.ivory}80` }}>
                     <LogOut style={{ width: 16, height: 16, marginInlineEnd: 10 }} />
                     {t('logout')}
                   </button>
@@ -440,7 +335,7 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
 
       {/* Mobile Bottom Navigation */}
       <div
-        className="fixed bottom-0 right-0 left-0 flex lg:hidden z-30"
+        className="fixed bottom-0 left-0 right-0 flex lg:hidden z-30"
         style={{ backgroundColor: T.espresso, borderTop: `1px solid ${T.gold}15` }}
       >
         <nav className="flex justify-around w-full" style={{ padding: '4px 0' }}>
@@ -450,7 +345,7 @@ export default function AdminNavigation({ userEmail, locale }: AdminNavigationPr
             return (
               <Link
                 key={item.href}
-                href={`/${locale}${item.href}`}
+                href={l(item.href)}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',

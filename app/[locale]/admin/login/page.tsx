@@ -26,7 +26,7 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLocale, useTranslations } from 'next-intl'
 import { Eye, EyeOff } from 'lucide-react'
@@ -40,12 +40,11 @@ const T = {
 }
 
 export default function AdminLoginPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const locale = useLocale()
   const t = useTranslations('admin.login')
   const isRtl = locale === 'ar'
-  const callbackUrl = searchParams.get('callbackUrl') || '/admin/dashboard'
+  const callbackUrl = searchParams.get('callbackUrl') || `/${locale}/admin/dashboard`
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -68,8 +67,7 @@ export default function AdminLoginPage() {
       if (result?.error) {
         setError(t('invalidCredentials'))
       } else {
-        router.push(callbackUrl)
-        router.refresh()
+        window.location.href = callbackUrl
       }
     } catch {
       setError(t('error'))
