@@ -17,6 +17,7 @@
  * - Uses setRequestLocale() to set locale for server components
  */
 
+import { Toaster } from 'sonner'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -52,6 +53,7 @@ export default async function AdminLayout({
   if (session) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: T.ivory, direction: isRtl ? 'rtl' : 'ltr' }}>
+        <Toaster richColors position={isRtl ? 'top-left' : 'top-right'} />
         <AdminNavigation userEmail={session.user?.email || ''} locale={locale} />
         <main 
           className={`min-h-screen ${isRtl ? 'lg:pr-64' : 'lg:pl-64'}`} 

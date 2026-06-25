@@ -781,10 +781,10 @@ type SortKey = "newest"|"price-asc"|"price-desc"|"promo-first";
 function SortSelect({ value, onChange, t }:{ value:SortKey; onChange:(v:SortKey)=>void; t: (key:string) => string }) {
   const [open, setOpen] = useState(false);
   const SORT_OPTIONS: {value:SortKey; label:string}[] = [
-    { value:"newest",      label:t('sort.newest') },
-    { value:"promo-first", label:t('sort.promoFirst') },
-    { value:"price-asc",   label:t('sort.priceAsc') },
-    { value:"price-desc",  label:t('sort.priceDesc') },
+    { value:"newest",      label:t('filters.sort.newest') },
+    { value:"promo-first", label:t('filters.sort.promoFirst') },
+    { value:"price-asc",   label:t('filters.sort.priceAsc') },
+    { value:"price-desc",  label:t('filters.sort.priceDesc') },
   ];
   const current = SORT_OPTIONS.find(o=>o.value===value)!;
   return (

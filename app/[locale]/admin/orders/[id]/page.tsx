@@ -9,7 +9,6 @@
  * - Order items list with product images
  * - Status update dropdown
  * - Customer details (name, phone, address)
- * - Print-friendly receipt layout
  * - Mobile responsive
  * 
  * BACKEND INTEGRATION:
@@ -22,7 +21,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Printer, Phone, MapPin, Package } from 'lucide-react'
+import { ArrowLeft, Phone, MapPin, Package } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { format } from 'date-fns'
@@ -136,7 +135,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
     }
   }
 
-  const handlePrint = () => window.print()
+ 
 
   if (loading) {
     return (
@@ -186,13 +185,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
               {format(new Date(order.createdAt), "dd MMMM yyyy 'à' HH:mm", { locale: dateLocale })}
             </p>
           </div>
-          <button onClick={handlePrint}
-            style={{ marginTop: 12, padding: '10px 24px', fontFamily: 'Inter, sans-serif', fontSize: 10, letterSpacing: '0.15em', border: `1px solid ${T.espresso}15`, backgroundColor: 'transparent', color: T.espresso, cursor: 'pointer', transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = T.gold }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = `${T.espresso}15` }}>
-            <Printer style={{ width: 14, height: 14, marginInlineEnd: 6, display: 'inline', verticalAlign: 'middle' }} />
-            {tc('export')}
-          </button>
+          
         </div>
       </div>
 

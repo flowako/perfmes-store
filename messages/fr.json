@@ -7,27 +7,20 @@
     "menu": "Menu"
   },
   "hero": {
-    "newCollection": "Nouvelle Collection — Automne 2026",
-    "title1": "Où",
-    "title2": "la Mémoire",
-    "title3": "Fleurit",
-    "subtitle": "Chaque flacon est une histoire distillée. Un écho intime de lieux, de moments, et du luxe tranquille d'être exactement là où vous appartenez.",
-    "discoverBtn": "Découvrir la Collection",
-    "ourMaison": "Notre Maison",
-    "stats": {
-      "years": "Années de Savoir-Faire",
-      "accords": "Accords Uniques",
-      "countries": "Pays"
-    },
-    "scroll": "Défiler"
+    "tag": "Tester 1er Choix — Qualité Originale",
+    "title1": "La Qualité des",
+    "title2": "Grands Parfums",
+    "title3": "",
+    "subtitle": "Découvrez notre sélection de parfums Tester 1er choix. 99% identiques aux originaux, mêmes notes, même tenue, même sillage. Sans le prix de la boîte.",
+    "discoverBtn": "Voir la Collection"
   },
   "marquee": {
-    "extrait": "Extrait de Parfum",
-    "maison": "Maison Éclore",
-    "since": "Depuis 1997",
-    "location": "Grasse, France",
-    "handcrafted": "Fait Main",
-    "limited": "Éditions Limitées"
+    "tester": "Tester 1er Choix",
+    "qualite": "99% Originale",
+    "livraison": "Livraison 58 Wilayas",
+    "prix": "Prix Imbattables",
+    "stock": "Stock Limité",
+    "fiable": "Produit Fiable"
   },
   "collections": {
     "sectionTag": "Nos Collections",
@@ -104,48 +97,41 @@
     "features": "Gravure gratuite · Emballage cadeau offert · Retours sous 30 jours"
   },
   "brandStory": {
-    "tag": "Notre Histoire",
-    "title": "L'Art de",
-    "titleItalic": "l'Invisible",
-    "paragraph1": "Fondée en 1997 dans les collines parfumées de Grasse, Maison Éclore est née d'une simple conviction : un parfum n'est pas quelque chose que vous portez — c'est quelque chose que vous devenez.",
-    "paragraph2": "Nos maîtres parfumeurs travaillent exclusivement avec des ingrédients rares et naturels, s'approvisionnant en roses de Bulgarie, oud du Cambodge et vétiver d'Haïti. Chaque composition est un équilibre entre tradition et audace.",
-    "paragraph3": "Nous ne créons pas de tendances. Nous créons des héritages.",
-    "quote": "Un parfum devrait murmurer, pas crier. Il devrait vous révéler lentement, comme un secret partagé.",
-    "quoteAuthor": "Isabelle Moreau, Fondatrice & Nez Principal"
+    "tag": "C'est Quoi un Tester 1er Choix ?",
+    "title": "Le Même Parfum,",
+    "titleItalic": "Sans l'Emballage",
+    "paragraph1": "Un tester 1er choix est un parfum authentique, conçu par la même maison de luxe, avec exactement les mêmes ingrédients et la même concentration que la version commerciale. La seule différence ? Il est conditionné dans une boîte cartonnée blanche simple, sans le coffret luxueux.",
+    "paragraph2": "Résultat : vous profitez de la même fragrance, du même sillage, de la même tenue — à un prix considérablement réduit. Ce sont les mêmes flacons que vous trouvez dans les magasins pour les tests, destinés à démontrer le produit.",
+    "paragraph3": "Chez Rym Parfums, nous sélectionnons soigneusement chaque tester pour garantir une qualité irréprochable. Parce que le vrai luxe, c'est ce qui compte à l'intérieur."
   },
   "whyChooseUs": {
-    "tag": "L'Engagement Éclore",
-    "title": "Pourquoi",
-    "titleItalic": "Nous Choisir",
+    "tag": "Pourquoi Nous Choisir",
+    "title": "Trois",
+    "titleItalic": "Raisons",
     "features": {
-      "ingredients": {
-        "title": "Ingrédients Rares",
-        "desc": "Sourcés des meilleurs terroirs du monde"
+      "quality": {
+        "title": "Qualité Premium",
+        "desc": "Parfums testers 1er choix — mêmes compositions, mêmes notes olfactives que les originaux, garantie 99% identique."
       },
-      "handcrafted": {
-        "title": "Fait à la Main",
-        "desc": "Chaque flacon est numéroté et signé"
+      "delivery": {
+        "title": "Livraison Partout",
+        "desc": "Expédition rapide vers les 58 wilayas d'Algérie. Suivi de commande disponible."
       },
-      "sustainable": {
-        "title": "Durable",
-        "desc": "Emballage rechargeable et pratiques éthiques"
-      },
-      "expertise": {
-        "title": "29 Ans d'Expertise",
-        "desc": "Trois générations de maîtres parfumeurs"
+      "price": {
+        "title": "Prix Imbattables",
+        "desc": "Le même parfum de luxe sans le prix de la boîte. Des économies réelles sur chaque flacon."
       }
     }
   },
   "finalCta": {
-    "title": "Trouvez",
-    "titleItalic": "Votre Signature",
-    "description": "Commencez votre voyage olfactif. Chaque parfum est une découverte — une invitation à explorer qui vous êtes.",
-    "shopBtn": "Parcourir la Collection",
-    "consultBtn": "Réserver une Consultation"
+    "title": "Prêt à",
+    "titleItalic": "Découvrir ?",
+    "description": "Parcourez notre collection de testers 1er choix et trouvez le parfum qui vous correspond. Stock limité — ne tardez pas.",
+    "shopBtn": "Voir les Parfums"
   },
   "footer": {
-    "tagline": "Haute Parfumerie depuis 1997.",
-    "tagline2": "Créé avec intention. Porté avec purpose.",
+    "tagline": "Spécialiste des testers 1er choix en Algérie.",
+    "tagline2": "Rym Parfums — l'essence du luxe à prix juste",
     "collections": "Collections",
     "maison": "Maison",
     "service": "Service",

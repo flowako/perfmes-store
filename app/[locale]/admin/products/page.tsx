@@ -29,6 +29,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { ar } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -93,7 +94,8 @@ export default function AdminProductsPage() {
   const handleDelete = (slug: string) => {
     if (!confirm(tc('areYouSure'))) return
     fetch(`/api/admin/products/${slug}`, { method: 'DELETE' })
-      .then(r => { if (r.ok) fetchProducts() })
+      .then(r => { if (r.ok) { fetchProducts(); toast.success(isRtl ? 'تم حذف المنتج' : 'Produit supprimé') } })
+      .catch(() => toast.error(tc('error')))
   }
 
   const getTotalStock = (variants: Array<{ stock: number }>) => variants.reduce((s, v) => s + v.stock, 0)

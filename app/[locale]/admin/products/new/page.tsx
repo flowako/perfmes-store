@@ -30,6 +30,7 @@ import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Save, Plus, Trash2, Upload, X, Star, ChevronUp, ChevronDown, Image as ImageIcon, Package } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -88,9 +89,9 @@ export default function NewProductPage() {
     setSavingBrand(true)
     try {
       const res = await fetch('/api/admin/brands', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(brandFormData) })
-      if (res.ok) { const d = await res.json(); const r = await fetch('/api/admin/brands'); setBrands((await r.json()).brands || []); setFormData(p => ({ ...p, brandId: d.brand.id })); setShowBrandModal(false); setBrandFormData({ name: '' }) }
-      else { const d = await res.json(); alert(d.error || tc('error')) }
-    } catch { alert(tc('error')) }
+      if (res.ok) { const d = await res.json(); const r = await fetch('/api/admin/brands'); setBrands((await r.json()).brands || []); setFormData(p => ({ ...p, brandId: d.brand.id })); setShowBrandModal(false); setBrandFormData({ name: '' }); toast.success(isRtl ? 'تم إنشاء العلامة التجارية' : 'Marque créée') }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
+    } catch { toast.error(tc('error')) }
     setSavingBrand(false)
   }
 
@@ -100,9 +101,9 @@ export default function NewProductPage() {
     setSavingCategory(true)
     try {
       const res = await fetch('/api/admin/categories', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(categoryFormData) })
-      if (res.ok) { const d = await res.json(); const r = await fetch('/api/admin/categories'); setCategories((await r.json()).categories || []); setFormData(p => ({ ...p, categoryIds: [...p.categoryIds, d.category.id] })); setShowCategoryModal(false); setCategoryFormData({ name: '' }) }
-      else { const d = await res.json(); alert(d.error || tc('error')) }
-    } catch { alert(tc('error')) }
+      if (res.ok) { const d = await res.json(); const r = await fetch('/api/admin/categories'); setCategories((await r.json()).categories || []); setFormData(p => ({ ...p, categoryIds: [...p.categoryIds, d.category.id] })); setShowCategoryModal(false); setCategoryFormData({ name: '' }); toast.success(isRtl ? 'تم إنشاء الفئة' : 'Catégorie créée') }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
+    } catch { toast.error(tc('error')) }
     setSavingCategory(false)
   }
 
@@ -159,9 +160,9 @@ export default function NewProductPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, variants: formData.variants.map(v => ({ size: v.size, price: parseFloat(v.price), stock: parseInt(v.stock) })) }),
       })
-      if (res.ok) router.push('/admin/products')
-      else { const d = await res.json(); alert(d.error || tc('error')) }
-    } catch { alert(tc('error')) }
+      if (res.ok) { toast.success(isRtl ? 'تم إنشاء المنتج' : 'Produit créé'); router.push('/admin/products') }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
+    } catch { toast.error(tc('error')) }
     setLoading(false)
   }
 

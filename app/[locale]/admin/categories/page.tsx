@@ -27,6 +27,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { ar } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -90,10 +91,10 @@ export default function AdminCategoriesPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-      if (res.ok) { setShowModal(false); fetchCategories() }
-      else { const d = await res.json(); setError(d.error || tcu('error')) }
+      if (res.ok) { setShowModal(false); fetchCategories(); toast.success(editingCategory ? (isRtl ? 'تم تحديث الفئة' : 'Catégorie mise à jour') : (isRtl ? 'تم إنشاء الفئة' : 'Catégorie créée')) }
+      else { const d = await res.json(); toast.error(d.error || tcu('error')) }
     } catch {
-      setError(tcu('error'))
+      toast.error(tcu('error'))
     }
     setSaving(false)
   }
@@ -103,10 +104,10 @@ export default function AdminCategoriesPage() {
     setDeleting(id)
     try {
       const res = await fetch(`/api/admin/categories/${id}`, { method: 'DELETE' })
-      if (res.ok) fetchCategories()
-      else { const d = await res.json(); alert(d.error || tcu('error')) }
+      if (res.ok) { fetchCategories(); toast.success(isRtl ? 'تم حذف الفئة' : 'Catégorie supprimée') }
+      else { const d = await res.json(); toast.error(d.error || tcu('error')) }
     } catch {
-      alert(tcu('error'))
+      toast.error(tcu('error'))
     }
     setDeleting(null)
   }

@@ -22,6 +22,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Search, Package } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -110,10 +111,10 @@ export default function NewPromotionPage() {
           isActive: formData.isActive, variantIds: formData.variantIds,
         }),
       })
-      if (res.ok) router.push('/admin/promotions')
-      else { const d = await res.json(); alert(d.error || tc('error')) }
+      if (res.ok) { toast.success(isRtl ? 'تم إنشاء العرض' : 'Promotion créée'); router.push('/admin/promotions') }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
     } catch {
-      alert(tc('error'))
+      toast.error(tc('error'))
     }
     setLoading(false)
   }

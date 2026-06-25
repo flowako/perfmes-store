@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
+import { STORE } from "@/lib/store";
 
-// Design Tokens
 const IVORY = "#F7F4EF";
 const GOLD = "#C9A96E";
 const ESPRESSO = "#1A1714";
@@ -48,7 +48,6 @@ export default function Header() {
         }}
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-          {/* Nav */}
           <nav className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((item) => (
               <a
@@ -69,7 +68,6 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Logo */}
           <a href={`/${locale}`} className="absolute left-1/2 -translate-x-1/2">
             <div className="flex flex-col items-center leading-none">
               <span
@@ -81,7 +79,7 @@ export default function Header() {
                   letterSpacing: "0.4em",
                 }}
               >
-                Éclore
+                {locale === 'ar' ? STORE.name.ar : STORE.name.fr}
               </span>
               <span
                 className="text-[8px] tracking-[0.5em] uppercase mt-0.5"
@@ -91,14 +89,12 @@ export default function Header() {
                   letterSpacing: "0.6em",
                 }}
               >
-                Paris
+                0798705096
               </span>
             </div>
           </a>
 
-          {/* Cart & Language Switcher */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Language Switcher */}
             <div className="flex items-center gap-2">
               <button
                 onClick={() => switchLocale('fr')}
@@ -149,7 +145,6 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile burger */}
           <button
             className="md:hidden p-2"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -177,7 +172,6 @@ export default function Header() {
         </div>
       </motion.header>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -202,7 +196,6 @@ export default function Header() {
                 {item.label}
               </motion.a>
             ))}
-            {/* Mobile cart button */}
             <motion.button
               onClick={() => {
                 setMenuOpen(false);

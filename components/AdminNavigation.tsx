@@ -24,7 +24,6 @@ import {
   Package, 
   ShoppingBag, 
   Tag, 
-  Settings, 
   LogOut,
   Menu,
   X,
@@ -88,7 +87,6 @@ export default function AdminNavigation({ userEmail }: AdminNavigationProps) {
     { href: '/admin/categories', label: t('categories'), icon: Tag },
     { href: '/admin/orders', label: t('orders'), icon: ShoppingBag },
     { href: '/admin/promotions', label: t('promotions'), icon: Tag },
-    { href: '/admin/settings', label: t('settings'), icon: Settings },
   ]
 
   return (

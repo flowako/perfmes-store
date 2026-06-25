@@ -28,6 +28,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { ar } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -91,10 +92,10 @@ export default function AdminBrandsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-      if (res.ok) { setShowModal(false); fetchBrands() }
-      else { const d = await res.json(); setError(d.error || tc('error')) }
+      if (res.ok) { setShowModal(false); fetchBrands(); toast.success(editingBrand ? (isRtl ? 'تم تحديث العلامة التجارية' : 'Marque mise à jour') : (isRtl ? 'تم إنشاء العلامة التجارية' : 'Marque créée')) }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
     } catch {
-      setError(tc('error'))
+      toast.error(tc('error'))
     }
     setSaving(false)
   }
@@ -104,10 +105,10 @@ export default function AdminBrandsPage() {
     setDeleting(id)
     try {
       const res = await fetch(`/api/admin/brands/${id}`, { method: 'DELETE' })
-      if (res.ok) fetchBrands()
-      else { const d = await res.json(); alert(d.error || tc('error')) }
+      if (res.ok) { fetchBrands(); toast.success(isRtl ? 'تم حذف العلامة التجارية' : 'Marque supprimée') }
+      else { const d = await res.json(); toast.error(d.error || tc('error')) }
     } catch {
-      alert(tc('error'))
+      toast.error(tc('error'))
     }
     setDeleting(null)
   }

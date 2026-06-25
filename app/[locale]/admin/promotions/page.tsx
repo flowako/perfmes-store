@@ -25,6 +25,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { ar } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 const T = {
   ivory:    '#F7F4EF',
@@ -78,10 +79,10 @@ export default function AdminPromotionsPage() {
     setDeleting(id)
     try {
       const res = await fetch(`/api/admin/promotions/${id}`, { method: 'DELETE' })
-      if (res.ok) setPromotions(p => p.filter(x => x.id !== id))
-      else alert(tc('error'))
+      if (res.ok) { setPromotions(p => p.filter(x => x.id !== id)); toast.success(isRtl ? 'تم حذف العرض' : 'Promotion supprimée') }
+      else toast.error(tc('error'))
     } catch {
-      alert(tc('error'))
+      toast.error(tc('error'))
     }
     setDeleting(null)
   }
