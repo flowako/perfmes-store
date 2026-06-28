@@ -326,10 +326,7 @@ function FilterPanel({ filters, onChange, onReset, count, availableBrands, avail
         </FilterSection>
       )}
 
-      <FilterSection title={t('price')}>
-        <RangeSlider min={20} max={500} value={filters.price}
-          onChange={v => onChange({...filters, price:v})}/>
-      </FilterSection>
+      {/* Price filter removed */}
 
       <FilterSection title={t('availability')} open={false}>
         {[
@@ -832,16 +829,13 @@ function ViewToggle({ view, onChange }:{ view:"grid"|"editorial"; onChange:(v:"g
   );
 }
 
-function filtersToParams(filters: Filters, sort: SortKey, search: string, fixedGenders?: Gender[]): URLSearchParams {
+function filtersToParams(filters: Filters, sort: SortKey, search: string): URLSearchParams {
   const params = new URLSearchParams();
   if (search) params.set('search', search);
   if (sort !== 'newest') params.set('sort', sort);
   filters.brands.forEach(b => params.append('brand', b));
   filters.categories.forEach(c => params.append('category', c));
-  // Apply fixed genders from route
-  if (fixedGenders) {
-    fixedGenders.forEach(g => params.append('gender', g));
-  }
+  // Gender params removed - determined by route, not stored in URL
   filters.sizes.forEach(s => params.append('size', s));
   if (filters.price[0] > 20) params.set('minPrice', String(filters.price[0]));
   if (filters.price[1] < 500) params.set('maxPrice', String(filters.price[1]));
@@ -969,14 +963,14 @@ function ProductsPage({ fixedGenders, pageTitle, pageSubtitle }: ProductsPageCom
   }, []);
 
   useEffect(() => {
-    const params = filtersToParams(filters, sort, debouncedSearch, fixedGenders);
+    const params = filtersToParams(filters, sort, debouncedSearch);
     const qs = params.toString();
     const currentQs = window.location.search.replace(/^\?/, '');
     if (qs !== currentQs) {
       const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
       window.history.replaceState(null, '', newUrl);
     }
-  }, [filters, sort, debouncedSearch, fixedGenders]);
+  }, [filters, sort, debouncedSearch]);
 
   useEffect(() => {
     const fetchProducts = async () => {

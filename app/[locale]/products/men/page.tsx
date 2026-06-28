@@ -6,7 +6,7 @@ export default function MenProductsPage() {
   
   return (
     <ProductsPageComponent 
-      fixedGenders={['MEN', 'UNISEX']}
+      fixedGenders={['MEN']}
       pageTitle={t('menPageTitle')}
       pageSubtitle={t('menPageSubtitle')}
     />
