@@ -469,15 +469,7 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {/* Stock badge */}
-              <div className="flex items-center gap-3 mb-4">
-                {selectedVariant && stockStatus && (
-                  <div className="flex items-center gap-2" style={{ padding: '3px 10px', backgroundColor: stockStatus.bg }}>
-                    <span style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: stockStatus.color, display: 'inline-block' }}/>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 500, color: stockStatus.color }}>{stockStatus.label}</span>
-                  </div>
-                )}
-              </div>
+            
               <div style={{ height: 1, backgroundColor: `${T.gold}15`, marginBottom: 24 }} />
 
               {/* Variant selector */}
