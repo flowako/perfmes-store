@@ -22,8 +22,8 @@ export default function Header() {
   
   const NAV_LINKS = [
     { label: t('products'), href: `/${locale}/products` },
-    { label: t('forMen'), href: `/${locale}/products?gender=men` },
-    { label: t('forWomen'), href: `/${locale}/products?gender=women` },
+    { label: t('forMen'), href: `/${locale}/products?gender=MEN` },
+    { label: t('forWomen'), href: `/${locale}/products?gender=WOMEN` },
   ];
   
   const switchLocale = (newLocale: string) => {
