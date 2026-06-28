@@ -6,10 +6,11 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import { useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function CartPage() {
   const router = useRouter()
+  const locale = useLocale()
   const { cart, updateQuantity, removeItem } = useCart()
   const t = useTranslations('cart')
 
@@ -30,7 +31,7 @@ export default function CartPage() {
               <ShoppingBag className="w-16 h-16 text-muted/30 mx-auto mb-4" strokeWidth={1} />
               <h2 className="font-heading text-2xl mb-4 text-charcoal">{t('empty')}</h2>
               <button
-                onClick={() => router.push('/products')}
+                onClick={() => router.push(`/${locale}/products/men`)}
                 className="px-8 py-3 bg-charcoal text-cream hover:bg-gold transition-colors text-xs tracking-wider uppercase"
               >
                 {t('continueShopping')}
@@ -141,7 +142,7 @@ export default function CartPage() {
                   </button>
 
                   <button
-                    onClick={() => router.push('/products')}
+                    onClick={() => router.push(`/${locale}/products/men`)}
                     className="w-full mt-3 py-3 border-2 border-charcoal/20 font-body text-xs tracking-wider uppercase hover:border-gold transition-colors"
                   >
                     {t('continueShopping')}

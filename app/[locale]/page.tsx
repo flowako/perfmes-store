@@ -330,6 +330,7 @@ function WhyChooseUsSection() {
 
 function FinalCtaSection() {
   const t = useTranslations("finalCta");
+  const locale = useLocale();
   return (
     <section className="relative overflow-hidden py-32 md:py-48 px-6 md:px-12 lg:px-24 text-center" style={{ backgroundColor: ESPRESSO }}>
       <div className="ec-grain" />
@@ -349,7 +350,7 @@ function FinalCtaSection() {
           </p>
         </Reveal>
         <Reveal delay={0.3}>
-          <Link href="/products"
+          <Link href={`/${locale}/products/men`}
             className="group relative inline-flex items-center gap-3 px-9 py-4 overflow-hidden"
             style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: ESPRESSO, backgroundColor: GOLD, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500 }}>
             <span className="absolute inset-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ backgroundColor: IVORY }} />
