@@ -95,7 +95,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (cart.items.length === 0 && !orderReference) {
-      router.push(`/${locale}/products/men`)
+      router.push(`/products/men`)
     }
   }, [cart.items.length, orderReference, router, locale])
 
@@ -615,7 +615,7 @@ export default function CheckoutPage() {
                       <Home style={{ width: 14, height: 14 }} />
                       {t('backHome')}
                     </button>
-                    <button onClick={() => { setShowConfirmationPopup(false); router.push(`/${locale}/products/men`) }}
+                    <button onClick={() => { setShowConfirmationPopup(false); router.push(`/products/men`) }}
                       style={{
                         flex: 1, padding: '14px 20px', fontFamily: 'Inter, sans-serif', fontSize: 10, letterSpacing: '0.25em',
                         textTransform: 'uppercase', display: 'flex', alignItems: 'center', justifyContent: 'center',
