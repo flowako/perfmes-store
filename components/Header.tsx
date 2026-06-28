@@ -21,9 +21,9 @@ export default function Header() {
   const router = useRouter();
   
   const NAV_LINKS = [
-    { label: t('products'), href: `/${locale}/products` },
-    { label: t('forMen'), href: `/${locale}/products?gender=MEN` },
-    { label: t('forWomen'), href: `/${locale}/products?gender=WOMEN` },
+    { label: t('forMen'), href: `/${locale}/products/men` },
+    { label: t('forWomen'), href: `/${locale}/products/women` },
+    { label: t('unisex'), href: `/${locale}/products/unisex` },
   ];
   
   const switchLocale = (newLocale: string) => {

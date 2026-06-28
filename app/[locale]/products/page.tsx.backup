@@ -18,7 +18,7 @@ const T = {
   ink:      "#2C2420",
 };
 
-type Gender = "MEN" | "WOMEN" | "UNISEX";
+export type Gender = "MEN" | "WOMEN" | "UNISEX";
 
 interface ProductVariant {
   id: string;

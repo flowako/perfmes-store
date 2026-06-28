@@ -3,6 +3,7 @@
     "products": "Produits",
     "forMen": "Pour Homme",
     "forWomen": "Pour Femme",
+    "unisex": "Unisexe",
     "cart": "Panier",
     "menu": "Menu"
   },
@@ -17,7 +18,7 @@
   "marquee": {
     "tester": "Tester 1er Choix",
     "qualite": "99% Originale",
-    "livraison": "Livraison 58 Wilayas",
+    "livraison": "Livraison 69 Wilayas",
     "prix": "Prix Imbattables",
     "stock": "Stock Limité",
     "fiable": "Produit Fiable"
@@ -115,7 +116,7 @@
       },
       "delivery": {
         "title": "Livraison Partout",
-        "desc": "Expédition rapide vers les 58 wilayas d'Algérie. Suivi de commande disponible."
+        "desc": "Expédition rapide vers les 69 wilayas d'Algérie. Suivi de commande disponible."
       },
       "price": {
         "title": "Prix Imbattables",
@@ -153,6 +154,12 @@
   "products": {
     "pageTitle": "Nos Parfums",
     "pageSubtitle": "Découvrez notre collection complète de fragrances d'exception",
+    "menPageTitle": "Parfums pour Homme",
+    "menPageSubtitle": "Collection masculine & unisexe - Des fragrances puissantes et raffinées",
+    "womenPageTitle": "Parfums pour Femme",
+    "womenPageSubtitle": "Collection féminine & unisexe - Des fragrances élégantes et captivantes",
+    "unisexPageTitle": "Parfums Unisexe",
+    "unisexPageSubtitle": "Des fragrances universelles pour tous",
     "filters": {
       "title": "Filtres",
       "gender": {

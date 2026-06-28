@@ -19,16 +19,16 @@ export default function Footer() {
   
   const FOOTER_LINKS = {
     collections: [
-      { label: t('links.lhomme'), href: `/${locale}/products?gender=MEN` },
-      { label: t('links.lafemme'), href: `/${locale}/products?gender=WOMEN` },
-      { label: t('links.libre'), href: `/${locale}/products?gender=UNISEX` },
-      { label: t('links.essentiel'), href: `/${locale}/products` },
+      { label: t('links.lhomme'), href: `/${locale}/products/men` },
+      { label: t('links.lafemme'), href: `/${locale}/products/women` },
+      { label: t('links.libre'), href: `/${locale}/products/unisex` },
+     
     ],
     maison: [
       { label: t('links.ourStory'), href: `/${locale}/#brand-story` },
     ],
     service: [
-      { label: t('links.shipping'), href: `/${locale}/products` },
+     
       { label: t('links.cart'), href: `/${locale}/cart` },
     ],
   };
