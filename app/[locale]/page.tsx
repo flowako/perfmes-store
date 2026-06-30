@@ -119,7 +119,7 @@ function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.05, ease: EASE }}
               className="flex flex-col sm:flex-row items-start gap-6">
-              <Link href={`/${locale}/products/men`}
+              <Link href={`/products/men`}
                 className="group relative inline-flex items-center gap-3 px-9 py-4 overflow-hidden"
                 style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: ESPRESSO, backgroundColor: GOLD, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500 }}>
                 <span className="absolute inset-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ backgroundColor: IVORY }} />
@@ -158,9 +158,9 @@ function CollectionsSection() {
   const t = useTranslations("collections");
   const locale = useLocale();
   const COLLECTIONS = [
-    { id: "lhomme", tint: "#3A1F18", pattern: "I", href: `/${locale}/products/men` },
-    { id: "lafemme", tint: "#2E1D2C", pattern: "II", href: `/${locale}/products/women` },
-    { id: "libre", tint: "#1C2A2C", pattern: "III", href: `/${locale}/products/unisex` },
+    { id: "lhomme", tint: "#3A1F18", pattern: "I", href: `/products/men` },
+    { id: "lafemme", tint: "#2E1D2C", pattern: "II", href: `/products/women` },
+    { id: "libre", tint: "#1C2A2C", pattern: "III", href: `/products/unisex` },
   ] as const;
 
   return (
@@ -174,7 +174,7 @@ function CollectionsSection() {
                 {t("title")} <em style={{ fontStyle: "italic", color: GOLD_DEEP }}>{t("titleItalic")}</em>
               </h2>
             </div>
-            <Link href={`/${locale}/products/men`} className="group self-start md:self-auto inline-flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase pb-1" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: MUTED, fontWeight: 500, borderBottom: `1px solid ${LINEN}` }}>
+            <Link href={`/products/men`} className="group self-start md:self-auto inline-flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase pb-1" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: MUTED, fontWeight: 500, borderBottom: `1px solid ${LINEN}` }}>
               {t("viewAll")}
               <span className="transform group-hover:translate-x-1 transition-transform duration-300" style={{ color: GOLD }}>→</span>
             </Link>
@@ -350,7 +350,7 @@ function FinalCtaSection() {
           </p>
         </Reveal>
         <Reveal delay={0.3}>
-          <Link href={`/${locale}/products/men`}
+          <Link href={`/products/men`}
             className="group relative inline-flex items-center gap-3 px-9 py-4 overflow-hidden"
             style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: ESPRESSO, backgroundColor: GOLD, fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500 }}>
             <span className="absolute inset-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ backgroundColor: IVORY }} />
